@@ -10,6 +10,8 @@ angular.module('ng-dragable-div', [])
 				ddWidth: '@',
 				ddZindex: '@',
 				ddBackground: '@',
+				ddTop: '@',
+				ddLeft: '@',
 			},
 			link: function($scope, element, attrs) {
 				var param = {};
@@ -19,6 +21,8 @@ angular.module('ng-dragable-div', [])
 				param.zindex = $scope.ddZindex || 1000;
 				param.className = $scope.ddClass || 'ng-dragable';
 				param.background = $scope.ddBackground || 'rgba(170,242,255,0.5)';
+				param.top = $scope.ddTop || '300px';
+				param.left = $scope.ddLeft || '300px';
 				element.addClass(param.className);
 				var body = document.body;
 				dragable = element[0];
@@ -28,6 +32,8 @@ angular.module('ng-dragable-div', [])
 				dragable.style.position = 'absolute';
 				dragable.style.background = param.background;
 				dragable.style.cursor = 'move';
+				dragable.style.top = param.top;
+				dragable.style.left = param.left;
 				if ($scope.ddShow) {
 					dragable.style.display = "block";
 				} else {
@@ -40,7 +46,6 @@ angular.module('ng-dragable-div', [])
 				if (dragable.children.length === 0) {
 					throw new Error('You need to have content inside the <dragable>');
 				}
-
 				var closeIcon = document.createElement("a")
 				closeIcon.style.float = "right";
 				closeIcon.style.marginRight = "10px";
@@ -58,7 +63,7 @@ angular.module('ng-dragable-div', [])
 				dragable.insertBefore(closeIcon, dragable.firstChild)
 				body.appendChild(dragable);
 				var clicked = "N";
-				var mausx = mausy = winx = winy = difx = dify = 0;
+				var mausx, mausy, winx, winy, difx, dify;
 				angular.element(document.querySelector("html")).on('mousemove', function(event) {
 					mausx = event.pageX;
 					mausy = event.pageY;
@@ -68,8 +73,8 @@ angular.module('ng-dragable-div', [])
 						difx = mausx - winx;
 						dify = mausy - winy;
 					}
-					var newx = event.pageX - difx - angular.element(document.querySelector("." + param.className)).css("marginLeft");
-					var newy = event.pageY - dify - angular.element(document.querySelector("." + param.className)).css("marginTop");
+					var newx = event.pageX - difx - angular.element(document.querySelector("." + param.className)).css("marginLeft").replace("px", "");
+					var newy = event.pageY - dify - angular.element(document.querySelector("." + param.className)).css("marginTop").replace("px", "");
 					angular.element(document.querySelector("." + param.className)).css("left", newx + "px");
 					angular.element(document.querySelector("." + param.className)).css("top", newy + "px");
 				});
@@ -79,7 +84,6 @@ angular.module('ng-dragable-div', [])
 				angular.element(document.querySelector("." + param.className)).on("mouseup", function(event) {
 					clicked = "N";
 				});
-
 				$scope.$watch('ddShow', function(value) {
 					if (!!value) {
 						dragable.style.display = "block";
