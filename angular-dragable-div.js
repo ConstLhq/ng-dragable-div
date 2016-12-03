@@ -1,4 +1,4 @@
-angular.module('angular-dragable-div', [])
+angular.module('ng-dragable-div', [])
 	.directive("dragAble", function() {
 		return {
 			restrict: 'EA',
