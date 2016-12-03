@@ -40,7 +40,7 @@ angular.module('ng-dragable-div', [])
 					dragable.style.display = "none";
 				}
 				if (dragable.tagName.toLowerCase() !== 'div' &&
-					dragable.tagName.toLowerCase() !== 'dragable') {
+					dragable.tagName.toLowerCase() !== 'drag-able') {
 					throw new Error('drag-able can only be applied to <div> or <drag-able> elements');
 				}
 				if (dragable.children.length === 0) {
