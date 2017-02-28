@@ -25,7 +25,7 @@ angular.module('ng-dragable-div', [])
 				param.left = $scope.ddLeft || '300px';
 				element.addClass(param.className);
 				var body = document.body;
-				dragable = element[0];
+				var dragable = element[0];
 				dragable.style.width = param.width;
 				dragable.style.height = param.height;
 				dragable.style.zIndex = param.zindex;
